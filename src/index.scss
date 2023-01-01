@@ -21,9 +21,10 @@
             border-radius: 50%;
             position: relative;
             margin-right: 6px;
-            transition: all 0.1s;
+            
 
             &:before {
+                transition: all 0.1s;
                 content: "";
                 position: absolute;
                 top: 50%;
@@ -31,13 +32,13 @@
                 transform: translate(-50%, -50%);
                 width: 10px;
                 height: 10px;
-                background: rgba(255, 255, 255, 0);
+                background: rgb(255, 255, 255, 255);
                 border-radius: 50%;
             }
 
             &:checked {
                 &:before {
-                    background: rgba(255, 255, 255,255);
+                    background: rgba(255, 255, 255, 0);
                 }
             }
         }
