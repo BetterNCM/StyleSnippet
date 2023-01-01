@@ -296,3 +296,4 @@ declare var h: typeof React.createElement;
 declare var f: typeof React.Fragment;
 declare const ReactDOM: typeof import("react-dom");
 declare const DEBUG: boolean;
+declare var betterncm_native: any;

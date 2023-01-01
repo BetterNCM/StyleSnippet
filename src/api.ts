@@ -1,0 +1,2 @@
+export const SNIPPETS_URL="https://ganbei-hot-update-1258625969.file.myqcloud.com/betterncm_snippets/snippets.json";
+export const FILE_BASE_URL="https://ganbei-hot-update-1258625969.file.myqcloud.com/betterncm_snippets/";

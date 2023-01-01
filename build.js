@@ -1,7 +1,6 @@
 const fs = require("fs");
 const { build } = require("esbuild");
-const { stylusLoader } = require("esbuild-stylus-loader");
-
+const { sassPlugin } = require("esbuild-sass-plugin")
 const entryPoints = [];
 const checkEntry = (path) => {
     if (fs.existsSync(path)) entryPoints.push(path);
@@ -9,31 +8,30 @@ const checkEntry = (path) => {
 
 checkEntry("src/index.tsx");
 checkEntry("src/startup_script.ts");
-checkEntry("src/index.styl");
 
 build({
-    entryPoints: [],
+    entryPoints,
     target: "chrome91",
     bundle: true,
     sourcemap: process.argv.includes("--dev") ? "inline" : false,
     minify: !process.argv.includes("--dev"),
-    outdir: ".",
+    outdir: process.argv.includes("--dev") ? "./" : "./dist",
     define: {
         DEBUG: process.argv.includes("--dev").toString(),
     },
     watch: process.argv.includes("--watch")
         ? {
-              onRebuild(err, result) {
-                  console.log("Rebuilding");
-                  if (err) {
-                      console.warn(err.message);
-                  } else if (result) {
-                      console.log("Build success");
-                  }
-              },
-          }
+            onRebuild(err, result) {
+                console.log("Rebuilding");
+                if (err) {
+                    console.warn(err.message);
+                } else if (result) {
+                    console.log("Build success");
+                }
+            },
+        }
         : undefined,
-    plugins: [stylusLoader()],
+    plugins: [sassPlugin()],
 }).then(() => {
     console.log("Build success");
 });
