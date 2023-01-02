@@ -15,7 +15,7 @@
             appearance: none;
             outline: none;
             box-shadow: none;
-            border: 2px solid #ccc;
+            border: 2px solid rgba(255, 255, 255, 0.479);
             width: 10px;
             height: 10px;
             border-radius: 50%;
@@ -32,13 +32,14 @@
                 transform: translate(-50%, -50%);
                 width: 10px;
                 height: 10px;
-                background: rgb(255, 255, 255, 255);
+                background: rgba(255, 255, 255, 0);
                 border-radius: 50%;
             }
 
             &:checked {
+                border: 2px solid rgb(255, 255, 255);
                 &:before {
-                    background: rgba(255, 255, 255, 0);
+                    background: rgb(255, 255, 255);
                 }
             }
         }
