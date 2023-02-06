@@ -123,6 +123,64 @@
                 automaticLayout: true
             });
 
+
+            // StyleSnippet Extended
+
+            monaco.languages.registerHoverProvider('less', {
+                provideHover: function (model, position) {
+                    const line = model.getLinesContent()[position.lineNumber - 1];
+                    if (line.startsWith("@") && line.includes("//")) {
+                        const optionsText = line.slice(line.indexOf("//") + 2);
+                        const options = optionsText.split(" ").map(v => v.trim()).filter(v => v
+                            .length);
+                        const range = new monaco.Range(
+                            1,
+                            1,
+                            model.getLineCount(),
+                            model.getLineMaxColumn(model.getLineCount())
+                        );
+
+                        if (options[0] === "#Config")
+                            return {
+                                range,
+                                contents: [{
+                                        value: '# StyleSnippet 设置项'
+                                    },
+                                    {
+                                        value: `## ${line.slice(0,line.indexOf("//"))}`
+                                    },
+                                    ...options.slice(1).map(v => {
+                                        if (v.startsWith("slider")) {
+                                            return {
+                                                value: "**滑条**"
+                                            }
+                                        }
+                                        if (v.startsWith("from")) {
+                                            return {
+                                                value: "**从**" + v.slice(4)
+                                            }
+                                        }
+                                        if (v.startsWith("to")) {
+                                            return {
+                                                value: "**到**" + v.slice(4)
+                                            }
+                                        }
+                                        if (v.startsWith("step")) {
+                                            return {
+                                                value: "**每步**" + v.slice(4)
+                                            }
+                                        }
+                                    })
+                                ]
+                            };
+                    }
+
+                    return {};
+                }
+            });
+
+            // AutoSave Icon
+
             let autoSaveCodelensDisposable = registerAutoSaveCodeLens();
             const autoSaveSwitchCommand = editor.addCommand(
                 0,
