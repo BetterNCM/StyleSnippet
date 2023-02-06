@@ -31,7 +31,10 @@ build({
             },
         }
         : undefined,
-    plugins: [sassPlugin()],
+    plugins: [
+        require("esbuild-monaco-editor-plugin")({ languages: ["less"] }),
+        sassPlugin()]
 }).then(() => {
+    fs.copyFileSync("./editor.html","./dist/editor.html");
     console.log("Build success");
 });

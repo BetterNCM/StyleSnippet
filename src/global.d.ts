@@ -297,3 +297,4 @@ declare var f: typeof React.Fragment;
 declare const ReactDOM: typeof import("react-dom");
 declare const DEBUG: boolean;
 declare var betterncm_native: any;
+declare var BETTERNCM_FILES_PATH: string;
