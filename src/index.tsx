@@ -219,7 +219,6 @@ function Menu() {
 
     return (
         <div className="stylesnippet-config">
-            <button>Editor</button>
             <h1>StyleSnippet</h1>
             {onlineSnippetList.filter(snippet => !snippet.hidden).map((snippet) => (
                 <div
@@ -238,7 +237,7 @@ function Menu() {
                 </div>
             ))}
 
-            <h2> {"[Local]"} </h2>
+            <h1> {"[Local]"} </h1>
 
             {localSnippetList.map((snippet) => (
                 <div
