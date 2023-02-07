@@ -53,7 +53,7 @@ function Menu() {
     const [onlineSnippetList, setOnlineSnippetList] =
         React.useState<Array<SnippetInfo>>([]);
 
-    const [localSnippetList, setLocalSnippetList] = React.useState<Array<SnippetInfo>>(readLocalSnippetList());
+    const [localSnippetList, setLocalSnippetList] = React.useState<Array<SnippetInfo>>([]);
 
 
     const reloadLocalSnippetList = () => {
