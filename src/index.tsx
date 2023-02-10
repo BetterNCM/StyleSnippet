@@ -19,7 +19,10 @@ let configElement;
 const PLUGIN_ONLINE_BASE_URL = BETTERNCM_FILES_PATH + plugin.pluginPath.split(/[/,\\]\./)[1];
 const PLUGIN_ONLINE_EDITOR_URL = PLUGIN_ONLINE_BASE_URL + "/editor.html";
 
-plugin.onLoad((selfPlugin) => {
+let self;
+
+plugin.onLoad(function (selfPlugin) {
+    self = this.mainPlugin;
     configElement = document.createElement("div");
     ReactDOM.render(<Menu />, configElement);
 });
@@ -55,6 +58,19 @@ function Menu() {
 
     const [localSnippetList, setLocalSnippetList] = React.useState<Array<SnippetInfo>>(readLocalSnippetList());
 
+    const [externalSnippetList, setExternalSnippetList] = React.useState<Array<StylesheetSnippet>>([]);
+
+    self.addExternalSnippet = (stylesheet, name, id) => {
+        setExternalSnippetList([...externalSnippetList, new StylesheetSnippet(
+            stylesheet, {
+            name,
+            file: "external_" + id,
+            id,
+            local: false,
+            hidden: false,
+        }
+        )]);
+    };
 
     const reloadLocalSnippetList = () => {
         try {
@@ -124,7 +140,7 @@ function Menu() {
     }
 
     async function calcStylesheets() {
-        const snippets: StylesheetSnippet[] = [];
+        const snippets: StylesheetSnippet[] = [...externalSnippetList];
 
         for (const enabledSnippet of enabledSnippets) {
             const s = await readSnippet(enabledSnippet);
@@ -213,6 +229,7 @@ function Menu() {
 
     const forkSnippet = async (id) => {
         const snippet = await readSnippet(id);
+        betterncm_native.fs.writeFileText('./StyleSnippets/' + id + "_backup.less", snippet?.stylesheet);
         betterncm_native.fs.writeFileText('./StyleSnippets/' + id + ".less", snippet?.stylesheet);
         reloadLocalSnippetList();
     }
@@ -237,7 +254,22 @@ function Menu() {
                 </div>
             ))}
 
-            <h1> {"[Local]"} </h1>
+            <h1>External 其他插件添加的</h1>
+            {
+                externalSnippetList.map(snippet => (<div
+                    className="snippet-container"
+                >
+                    <input
+                        type="checkbox"
+                        className="snippet-checkbox"
+                        checked={true}
+                    />
+                    <span className="snippet-name"
+                    >{snippet.info.name}</span>
+                </div>))
+            }
+
+            <h1> Local 本地的</h1>
 
             {localSnippetList.map((snippet) => (
                 <div
