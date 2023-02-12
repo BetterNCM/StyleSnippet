@@ -162,6 +162,7 @@ declare module "betterncm-api/tests" {
 }
 declare module "betterncm-api/utils" {
     export namespace utils {
+        function debounce(c,b);
         function waitForElement<K extends keyof HTMLElementTagNameMap>(
             selector: K,
             interval?: number,
