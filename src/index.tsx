@@ -317,8 +317,8 @@ function Menu() {
                     <div
                         className="snippet-container"
                     >
-                        <span className="snippet-name snippet-checkbox-label"
-                        >{snippet.info.name}</span>
+                        <div style={{fontSize:'20px', }}>{snippet.info.name}</div>
+
                     </div>
                     <div
                         className="snippet-container snippet-container-config"
@@ -328,7 +328,10 @@ function Menu() {
                 </>))
             }
 
-            <h1> Local 本地的</h1>
+            <h1> Local 本地的 <span onClick={()=>{
+                betterncm_native.fs.writeFileText('./StyleSnippets/' + prompt("Id") + ".less", "");
+                reloadLocalSnippetList();
+            }} style={{color:"gray"}}>+</span></h1>
 
             {localSnippetList.map((snippet) => (
                 <>
