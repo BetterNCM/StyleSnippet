@@ -144,7 +144,7 @@ function Menu() {
                 code = await fetchWithCache(
                     `${FILE_BASE_URL}${snippet.file}`,
                 );
-            if (code.text)
+            if (code.text !== undefined)
                 return new StylesheetSnippet(code.text, snippet);
         }
     }
@@ -317,7 +317,7 @@ function Menu() {
                     <div
                         className="snippet-container"
                     >
-                        <div style={{fontSize:'20px', }}>{snippet.info.name}</div>
+                        <div style={{ fontSize: '20px', }}>{snippet.info.name}</div>
 
                     </div>
                     <div
@@ -328,10 +328,10 @@ function Menu() {
                 </>))
             }
 
-            <h1> Local 本地的 <span onClick={()=>{
+            <h1> Local 本地的 <span onClick={() => {
                 betterncm_native.fs.writeFileText('./StyleSnippets/' + prompt("Id") + ".less", "");
                 reloadLocalSnippetList();
-            }} style={{color:"gray"}}>+</span></h1>
+            }} style={{ color: "gray" }}>+</span></h1>
 
             {localSnippetList.map((snippet) => (
                 <>
