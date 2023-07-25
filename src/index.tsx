@@ -110,10 +110,13 @@ function Menu() {
         Array<String>
     >("enabledSnippets", []);
 
+    // @ts-ignore
+    const is300 = APP_CONF.appver.startsWith('3.');
+
     function mapOnlineSnippets(snippets) {
         return snippets?.map(v => {
             return {
-                ...v, hidden: localSnippetList.findIndex(loc => loc.id === v.id) !== -1
+                ...v, hidden: (localSnippetList.findIndex(loc => loc.id === v.id) !== -1) || (is300 && !v.ncm3) || (!is300 && v.ncm3)
             };
         })!
     }
