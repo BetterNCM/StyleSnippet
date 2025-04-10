@@ -132,7 +132,7 @@ function Menu() {
 
     React.useEffect(() => {
         calcStylesheets();
-    }, [enabledSnippets, localSnippetList, onlineSnippetList]);
+    }, [enabledSnippets, localSnippetList, onlineSnippetList, externalSnippetList]);
 
     async function readSnippet(id) {
         const snippetListFull = [...localSnippetList, ...onlineSnippetList ?? []];
